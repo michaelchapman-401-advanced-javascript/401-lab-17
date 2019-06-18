@@ -1,6 +1,11 @@
 'use strict';
 
 const fs = require('fs');
+const net = require('net');
+
+const client = new net.Socket();
+
+client.connect(3001, 'localhost', () => console.log('Socket in app.js created!'));
 
 /**
  * @module alterFile
@@ -11,6 +16,10 @@ const alterFile = (file) => {
   readFile(file)
     .then(data => {
       writeFile(file, caps(data));
+    })
+    .catch(err => {
+      console.log(err);
+      client.write((`ERROR: when trying to read or write file with ${err.path}`));
     });
 };
 
@@ -20,10 +29,13 @@ const alterFile = (file) => {
  * @desc Handles reading the file and turning it's data to string
  */
 let readFile = (file) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     fs.readFile( file, (err, data) => {
-      if(err) { throw err; }
-      resolve(data.toString());
+      if(err) { 
+        reject(err); 
+      } else {
+        resolve(data.toString());
+      }
     });
   });
 };
@@ -45,10 +57,14 @@ let caps = (data) => {
  * @desc Writes the text to the file
  */
 let writeFile = (file, text) => {
-  return new Promise(() => {
+  return new Promise((resolve, reject) => {
     fs.writeFile( file, Buffer.from(text), (err) => {
-      if(err) { throw err; }
-      console.log(`${file} saved!`);
+      if(err) {
+        reject(err); 
+      } else {
+        // send message
+        client.write(`SAVE: File saved to ${file}`);
+      }
     });
   });
 };

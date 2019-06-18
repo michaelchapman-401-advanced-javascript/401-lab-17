@@ -20,9 +20,11 @@ server.on('connection', (socket) => {
 
 let dispatchEvent = (buffer) => {
   let text = buffer.toString().trim();
-  for (let socket in socketPool) {
-    socketPool[socket].write(`${event} ${text}`);
-  }
+
+  console.log('TEXT: ', text);
+  // for (let socket in socketPool) {
+  //   socketPool[socket].write(`${event} ${text}`);
+  // }
 };
 
 
