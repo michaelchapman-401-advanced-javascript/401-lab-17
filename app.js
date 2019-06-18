@@ -19,7 +19,7 @@ const alterFile = (file) => {
     })
     .catch(err => {
       console.log(err);
-      client.write((`ERROR: when trying to read or write file with ${err.path}`));
+      client.write('ERROR: something went wrong');
     });
 };
 
