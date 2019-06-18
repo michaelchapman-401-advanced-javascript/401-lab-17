@@ -17,9 +17,13 @@ const alterFile = (file) => {
     .then(data => {
       writeFile(file, caps(data));
     })
-    .catch(err => {
-      console.log(err);
-      client.write('ERROR: something went wrong');
+    .catch(() => {
+      let error = {
+        name: 'error',
+        message: 'ERROR: something went wrong',
+      };
+
+      client.write(JSON.stringify(error));
     });
 };
 
@@ -62,8 +66,12 @@ let writeFile = (file, text) => {
       if(err) {
         reject(err); 
       } else {
-        // send message
-        client.write(`SAVE: File saved to ${file}`);
+        let message = {
+          name: 'save',
+          message: `SAVE: File saved to ${file}`,
+        };
+
+        client.write(JSON.stringify(message));
       }
     });
   });
