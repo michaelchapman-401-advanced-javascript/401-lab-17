@@ -1,13 +1,10 @@
 'use strict';
 
 const net = require('net');
+const events = require('./events.js');
 
 const port = process.env.PORT || 3001;
 const server = net.createServer();
-
-const EventEmitter = require('events');
-
-const events = new EventEmitter();
 
 server.listen(port, () => console.log(`Server up on ${port}`) );
 
