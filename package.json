@@ -1,0 +1,19 @@
+{
+  "name": "events-lab",
+  "version": "1.0.0",
+  "description": "Events Lab",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "jest --verbose --coverage",
+    "lint": "eslint --fix \"**/*.js\"",
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json ."
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^23.6.0",
+    "jsdoc": "^3.6.2"
+  }
+}
