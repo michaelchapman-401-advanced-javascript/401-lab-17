@@ -7,10 +7,15 @@ const client = new net.Socket();
 
 client.connect(3001, 'localhost', () => console.log('Socket in app.js created!'));
 
+/**
+ * client.on('data)
+ * @param {string} buffer - buffer sent from server.js
+ * @desc handles checking whether error or save and then emits the appropriate event
+ */
 client.on('data', (buffer) => {
   let data = buffer.toString().trim();
   data = JSON.parse(data);
-  
+
   if (data.name === 'error') {
     events.emit('registerError', data);
   } else if (data.name === 'save') {

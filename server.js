@@ -19,6 +19,11 @@ server.on('connection', (socket) => {
   });
 });
 
+/**
+ * dispatchEvent
+ * @param {string} buffer - buffer from server.on('connection)
+ * @desc handles writing the buffer to all connected sockets
+ */
 let dispatchEvent = (buffer) => {
   for (let socket in socketPool) {
     socketPool[socket].write(buffer);
